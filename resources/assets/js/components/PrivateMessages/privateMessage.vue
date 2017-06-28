@@ -49,7 +49,27 @@ export default {
         subject: '',
         message: '',
         sender: ''
-      }
+      },
+      pusher: null,
+      channel: null
+    }
+  },
+
+  created: function(){
+    Echo.join('chatroom')
+        .here()
+        .joining()
+        .leaving()
+        .listen('MessagePosted', (e) => {
+          // this.newMessageNotification(e);
+          this.messagesRec.unshift(e.privateMessage);
+          console.log(e.privateMessage);
+        });
+  },
+
+  methods: {
+    newMessageNotification: function(message){
+
     }
   },
 
@@ -66,4 +86,7 @@ export default {
 </script>
 
 <style lang="css">
+.unread{
+  font-weight: bold;
+}
 </style>

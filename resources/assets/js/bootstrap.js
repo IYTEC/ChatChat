@@ -25,10 +25,11 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-
+import VueSocketio from 'vue-socket.io';
+Vue.use(VueSocketio, 'http://localhost:8000');
 window.Vue = Vue;
 Vue.use(VueRouter);
-
+import Pusher from 'pusher-js';
 /**
  * Next we will register the CSRF Token as a common header with Axios so that
  * all outgoing HTTP requests automatically have it attached. This is just
@@ -43,11 +44,13 @@ let token = document.head.querySelector('meta[name="csrf-token"]');
  * allows your team to easily build robust real-time web applications.
  */
 
-// import Echo from 'laravel-echo'
+import Echo from 'laravel-echo'
 
 // window.Pusher = require('pusher-js');
 
-// window.Echo = new Echo({
-//     broadcaster: 'pusher',
-//     key: 'your-pusher-key'
-// });
+window.Echo = new Echo({
+    broadcaster: 'pusher',
+    key: '1c30bc06e1902ed8690e',
+    cluster: 'eu',
+    encrypted: true
+});
